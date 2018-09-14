@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	
+	<appender name="dailyTextAppender" class="org.apache.log4j.DailyRollingFileAppender">
+   		<param name="datePattern" value="'.'yyyy-MM-dd" />
+   		<param name="file" value="logs/apexWelder.log" />
+    		<param name="Append" value="true" />
+                <param name="BufferSize" value="50" />
+                <param name="BufferedIO" value="false" />
+                <param name ="ImmediateFlush" value="true"/>
+    		<layout class="org.apache.log4j.PatternLayout">
+    		  <param name="ConversionPattern" value="%d{ISO8601} %-5p [%t] %c: %m%n" />
+   		</layout>
+  	</appender>
+	
+    <appender name="dailyHTMLAppender" class="org.apache.log4j.DailyRollingFileAppender">
+   		<param name="datePattern" value="'.'yyyy-MM-dd" />
+   		<param name="file" value="logs/apexWelder.log.html" />
+    		<param name="Append" value="true" />
+                <param name="BufferSize" value="50" />
+                <param name="BufferedIO" value="false" />
+                <param name ="ImmediateFlush" value="true"/>
+    	
+        <layout class="org.apache.log4j.HTMLLayout">
+            <param name ="LocationInfo" value="true"/>
+            <param name ="Title" value="Log Trace"/>
+   		</layout>
+  	</appender>
+        
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- <param name="ConversionPattern" value="%d{ISO8601} %5p [%t] %c: %m%n"/>  -->
+			<param name="ConversionPattern" value="%m%n"/>
+		</layout>
+	</appender>
+
+    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="1"/>
+        <!-- appender-ref ref="dailyTextAppender"/ -->
+        <appender-ref ref="stdout"/>
+    </appender>
+    
+	<root>
+		<priority value="info" />
+		<appender-ref ref="ASYNC" />
+	</root>
+
+</log4j:configuration>
+ 
